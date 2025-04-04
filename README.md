@@ -1,3 +1,8 @@
+RUN after clone: 
+cd .. / cum se cheama 
+cd scripts && python3 -m venv .venv && pip3 install certifi==2025.1.31 charset-normalizer==3.4.1 idna==3.10 pip==24.3.1 requests==2.32.3 urllib3==2.3.0 && cd ..
+npm start
+
 template : https://dennistretyakov.com/first-electron-app-with-react-and-typescript/
 
 # Getting Started with Create React App
