@@ -50,6 +50,9 @@ const GeneOverview: React.FC = () => {
   return (
     <div style={{ padding: 20 }}>
       <h2>🔬 Gene Explorer</h2>
+      <div className="p-6 bg-white shadow-md rounded-xl">
+        <h2 className="text-2xl font-bold text-red-700">🔬 Gene Explorer</h2>
+      </div>
       <input
         type="text"
         value={gene}
