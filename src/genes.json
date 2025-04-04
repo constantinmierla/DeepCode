@@ -1,0 +1,18 @@
+{
+  "TP53": {
+    "fullName": "Tumor Protein P53",
+    "function": "Acts as a tumor suppressor; regulates cell cycle.",
+    "diseases": [
+      "Li-Fraumeni syndrome",
+      "Breast cancer"
+    ]
+  },
+  "BRCA1": {
+    "fullName": "Breast Cancer 1",
+    "function": "DNA repair protein involved in double-strand break repair.",
+    "diseases": [
+      "Breast cancer",
+      "Ovarian cancer"
+    ]
+  }
+}
