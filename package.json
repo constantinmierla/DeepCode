@@ -11,6 +11,8 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.1",
+    "child_process": "^1.0.2",
+    "fs": "^0.0.1-security",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.4.1",
