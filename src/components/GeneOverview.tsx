@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import mockData from "../genes.json";
-import { exec } from 'child_process';
 
 type GeneInfo = {
   fullName: string;
@@ -11,20 +9,6 @@ type GeneInfo = {
 const GeneOverview: React.FC = () => {
   const [gene, setGene] = useState("");
   const [geneInfo, setGeneInfo] = useState<GeneInfo | null>(null);
-  const [error, setError] = useState("");
-
-  //const handleSearch = () => {
-  //  const geneKey = gene.toUpperCase();
-  //  const result = (mockData as Record<string, GeneInfo>)[geneKey];
-
-  //  if (result) {
-  //    setGeneInfo(result);
-  //    setError("");
-  //  } else {
-  //    setGeneInfo(null);
-  //    setError("Gene not found.");
-  //  }
-  //};
 
   const handleSearch = async () => {
     try {
@@ -48,7 +32,6 @@ const GeneOverview: React.FC = () => {
       }
 
       // You can log or concatenate information as needed
-      const fullString = `Gene: ${fullName} - Function: ${functionInfo} - Diseases: ${diseases.join(", ")}`;
 
       const geneInfoObj: GeneInfo = {
         fullName: fullName,
@@ -78,7 +61,6 @@ const GeneOverview: React.FC = () => {
         Search
       </button>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
 
       {geneInfo && (
         <div style={{ marginTop: 20 }}>
