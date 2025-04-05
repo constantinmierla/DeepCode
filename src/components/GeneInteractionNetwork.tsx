@@ -25,7 +25,7 @@ const GeneInteractionNetwork: React.FC<GeneInteractionNetworkProps> = ({
   const cyRef = useRef<Core | null>(null);
   const [selectedGeneDetails, setSelectedGeneDetails] =
     useState<GeneDetails | null>(null);
-
+  const [popupPosition, setPopupPosition] = useState<{ x: number; y: number } | null>(null);
   const interactingGenes = geneInteractionsMap[geneName] || [];
 
   useEffect(() => {
@@ -88,7 +88,26 @@ const GeneInteractionNetwork: React.FC<GeneInteractionNetworkProps> = ({
       const nodeId = event.target.id();
       const geneDetails = geneData[nodeId];
       setSelectedGeneDetails(geneDetails || null);
+
+      const { x, y } = event.renderedPosition || { x: 0, y: 0 };
+
+      const cyContainer = document.getElementById("cy");
+      if (!cyContainer) return;
+
+      const rect = cyContainer.getBoundingClientRect();
+
+      // Adjust the position relative to the page/document
+      const adjustedX = rect.left + x;
+      const adjustedY = rect.top + y;
+
+      setPopupPosition({ x: adjustedX, y: adjustedY });
     });
+
+    cyRef.current.on("mouseout", "node", () => {
+      setSelectedGeneDetails(null);
+      setPopupPosition(null);
+    });
+
 
     return () => {
       cyRef.current?.destroy();
@@ -102,25 +121,33 @@ const GeneInteractionNetwork: React.FC<GeneInteractionNetworkProps> = ({
   return (
     <div className="gene-interaction-network">
       <div id="cy" style={{ height: "600px", width: "100%" }}></div>
-      {selectedGeneDetails && (
-        <div className="gene-details">
-          <h3>Gene Details</h3>
-          <p>
-            <strong>Full Name:</strong> {selectedGeneDetails.fullName}
-          </p>
-          <p>
-            <strong>Function:</strong> {selectedGeneDetails.function}
-          </p>
-          <p>
-            <strong>Associated Diseases:</strong>
-            <ul>
-              {selectedGeneDetails.diseases.map((disease, index) => (
-                <li key={index}>{disease}</li>
-              ))}
-            </ul>
-          </p>
+      {selectedGeneDetails && popupPosition && (
+        <div
+          style={{
+            position: "absolute",
+            left: popupPosition.x,
+            top: popupPosition.y,
+            background: "white",
+            border: "1px solid #ccc",
+            borderRadius: 4,
+            padding: "10px",
+            boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+            zIndex: 10,
+            maxWidth: "300px",
+            transform: "translate(-50%, -100%)", // moves it above and centered horizontally
+          }}
+        >
+          <h3 style={{ marginTop: 0 }}>{selectedGeneDetails.fullName}</h3>
+          <p><strong>Function:</strong> {selectedGeneDetails.function}</p>
+          <p><strong>Diseases:</strong></p>
+          <ul style={{ marginTop: 0 }}>
+            {selectedGeneDetails.diseases.map((disease, index) => (
+              <li key={index}>{disease}</li>
+            ))}
+          </ul>
         </div>
       )}
+
     </div>
   );
 };
