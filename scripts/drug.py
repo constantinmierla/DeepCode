@@ -180,26 +180,32 @@ def suggest_for_gene(target_gene, top_n=5):
     df = gather_all_drugs(target_gene)
     repurposing_data = compute_repurposing_scores(df)
 
-    is_target = repurposing_data["gene"].str.upper() == target_gene.upper()
-    filtered = repurposing_data[is_target].copy()
+    similar_genes = get_similar_genes(target_gene)
 
+    is_target = repurposing_data["gene"].str.upper() == target_gene.upper()
+    is_similar = repurposing_data["gene"].str.upper().isin([g.upper() for g in similar_genes])
+
+    # 🧬 combinăm genele target și similare
+    filtered = repurposing_data[is_target | is_similar].copy()
+
+    # ⚙️ calculăm scorul ajustat
     filtered["adjusted_score"] = filtered.apply(
-        lambda row: row["repurposing_score"] + 20
-        if row["gene"].upper() == target_gene.upper()
+        lambda row: row["repurposing_score"] + 20 if row["gene"].upper() == target_gene.upper()
         else row["repurposing_score"] * 0.3,
         axis=1,
     )
-    similar_genes = get_similar_genes(target_gene)
 
+    # 🔝 sortăm rezultatele
     sorted_result = filtered.sort_values(by="adjusted_score", ascending=False)
+
     result_dict = {
         "gene": target_gene.upper(),
+        "similar_genes": similar_genes,
         "suggestions": [
             {
                 "medicament_name": row["drug"],
                 "score": round(row["adjusted_score"], 2),
-                # "gene": row["gene"],
-                "gene": similar_genes,
+                "gene": row["gene"],
                 "indication": row["indication"],
                 "mechanism": row["mechanism"],
             }
