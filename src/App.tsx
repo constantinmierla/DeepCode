@@ -3,11 +3,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css"; // <-- Tailwind first
 import "./App.css"; // <-- Your custom styles
 import MainComponent from "./components/MainComponent";
+import LoadingComponent from "./components/LoadingComponent";
 
 function App() {
   return (
     <Router>
-      <MainComponent></MainComponent>
+      <LoadingComponent
+        children={<MainComponent></MainComponent>}
+      ></LoadingComponent>
     </Router>
   );
 }

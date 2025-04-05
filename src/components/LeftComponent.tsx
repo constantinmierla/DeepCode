@@ -24,7 +24,7 @@ const LeftComponent: React.FC<GeneDetailsProps> = ({
     style={{ maxHeight: "calc(100vh - 100px)", overflowY: "auto" }}
   >
     <h3 className="text-2xl font-bold text-gray-900 mb-4">
-      Gene: <span className="text-blue-600">{gene.toUpperCase()}</span>
+      Gene <span className="text-blue-600">{gene.toUpperCase()}</span>
     </h3>
     {isFetching ? (
       <div

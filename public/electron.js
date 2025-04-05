@@ -10,8 +10,7 @@ const windowUrl = app.isPackaged
 let mainWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'), // ← You'll define this next
       nodeIntegration: false,
@@ -20,6 +19,8 @@ function createWindow() {
   });
   mainWindow.loadURL(windowUrl);
   mainWindow.on(`closed`, () => (mainWindow = null));
+  mainWindow.maximize();
+  mainWindow.show();
 }
 
 app.on(`ready`, createWindow);
