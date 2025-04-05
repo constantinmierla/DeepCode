@@ -23,8 +23,8 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
 
   return (
     <div
-      className="mt-6 p-6 bg-white shadow-lg rounded-xl border border-gray-200"
-      style={{ maxHeight: "calc(100vh - 115px)", overflowY: "auto" }}
+      className="mt-3 p-6 bg-white shadow-lg rounded-xl border border-gray-200"
+      style={{ maxHeight: "calc(100vh - 100px)", overflowY: "auto" }}
     >
       <h3 className="text-2xl font-bold text-gray-900 mb-4">
         Drug Suggestions
