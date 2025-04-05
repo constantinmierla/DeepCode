@@ -3,8 +3,6 @@ import pandas as pd
 import sys
 import json
 
-# from scripts.ceva import get_similar_genes
-
 gene_symbol_to_ensembl = {
     "BRCA1": "ENSG00000012048",
     "TP53": "ENSG00000141510",
@@ -59,7 +57,6 @@ gene_symbol_to_ensembl = {
     "H2AX": "ENSG00000188486",
 }
 
-
 def fetch_drugs(ensembl_id, gene_symbol):
     url = "https://api.platform.opentargets.org/api/v4/graphql"
     headers = {"Content-Type": "application/json"}
@@ -104,10 +101,8 @@ def fetch_drugs(ensembl_id, gene_symbol):
         print(f"Error fetching drugs for {gene_symbol}: {e}")
         return []
 
-
 def gather_all_drugs(target_gene=None):
     all_drugs = []
-
     symbols = list(gene_symbol_to_ensembl.keys())
     if target_gene and target_gene.upper() not in symbols:
         symbols.append(target_gene.upper())
@@ -126,7 +121,6 @@ def gather_all_drugs(target_gene=None):
 
     return pd.DataFrame(all_drugs)
 
-
 def compute_repurposing_scores(df):
     indication_counts = (
         df.groupby(["gene", "drug"]).size().reset_index(name="indication_count")
@@ -140,7 +134,6 @@ def compute_repurposing_scores(df):
         merged, df.drop_duplicates(subset=["gene", "drug"]), on=["gene", "drug"]
     )
 
-
 def get_string_id(gene):
     try:
         response = requests.get(
@@ -153,7 +146,6 @@ def get_string_id(gene):
     except Exception as e:
         print(f"Error resolving STRING ID for {gene}: {e}")
         return None
-
 
 def get_similar_genes(gene):
     string_id = get_string_id(gene)
@@ -175,7 +167,6 @@ def get_similar_genes(gene):
         print(f"Error fetching similar genes for {gene}: {e}")
         return []
 
-
 def suggest_for_gene(target_gene, top_n=5):
     df = gather_all_drugs(target_gene)
     repurposing_data = compute_repurposing_scores(df)
@@ -185,17 +176,22 @@ def suggest_for_gene(target_gene, top_n=5):
     is_target = repurposing_data["gene"].str.upper() == target_gene.upper()
     is_similar = repurposing_data["gene"].str.upper().isin([g.upper() for g in similar_genes])
 
-    # 🧬 combinăm genele target și similare
     filtered = repurposing_data[is_target | is_similar].copy()
 
-    # ⚙️ calculăm scorul ajustat
+    def calculate_adjusted_score(row, target_gene, similar_genes):
+        base_score = row["repurposing_score"]
+        if row["gene"].upper() == target_gene.upper():
+            adjusted = base_score + 15
+        elif row["gene"].upper() in [g.upper() for g in similar_genes]:
+            adjusted = base_score + 5
+        else:
+            adjusted = base_score
+        return max(0, min(adjusted, 100))
+
     filtered["adjusted_score"] = filtered.apply(
-        lambda row: row["repurposing_score"] + 20 if row["gene"].upper() == target_gene.upper()
-        else row["repurposing_score"] * 0.3,
-        axis=1,
+        lambda row: calculate_adjusted_score(row, target_gene, similar_genes), axis=1
     )
 
-    # 🔝 sortăm rezultatele
     sorted_result = filtered.sort_values(by="adjusted_score", ascending=False)
 
     result_dict = {
@@ -208,13 +204,17 @@ def suggest_for_gene(target_gene, top_n=5):
                 "gene": row["gene"],
                 "indication": row["indication"],
                 "mechanism": row["mechanism"],
+                "gene_relation": (
+                    "target" if row["gene"].upper() == target_gene.upper()
+                    else "similar" if row["gene"].upper() in [g.upper() for g in similar_genes]
+                    else "other"
+                ),
             }
             for _, row in sorted_result.head(top_n).iterrows()
         ],
     }
 
     return result_dict
-
 
 def get_ensembl_id_from_symbol(symbol):
     search_url = f"https://mygene.info/v3/query?q={symbol}&species=human"
@@ -241,7 +241,6 @@ def get_ensembl_id_from_symbol(symbol):
     except Exception as e:
         print(f"Eroare la obținerea Ensembl ID pentru {symbol}: {e}")
     return None
-
 
 if __name__ == "__main__":
     gene = sys.argv[1]
