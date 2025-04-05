@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import GeneHeader from "./GeneHeader";
+import SearchInput from "./SearchInput";
+import GeneDetails from "./GeneDetails";
 
 type GeneInfo = {
   fullName: string;
@@ -6,6 +9,7 @@ type GeneInfo = {
   diseases: string[];
 }
 
+//TODO: implement validation , if not found
 const GeneOverview: React.FC = () => {
   const [gene, setGene] = useState("");
   const [geneInfo, setGeneInfo] = useState<GeneInfo | null>(null);
@@ -14,67 +18,32 @@ const GeneOverview: React.FC = () => {
     try {
       const result = await (window as any).electronAPI.getGeneInfo(gene);
       const validJsonString = result.replace(/'/g, '"');
-
-      // Now parse the string into an object
       const resultJson = JSON.parse(validJsonString);
-      // Extract the fullName from the parsed object
-      const fullName = resultJson["fullName"];
-      const functionInfo = resultJson["function"];
+
       let diseases = resultJson["diseases"];
-      if (diseases && typeof diseases === 'string') {
+      if (typeof diseases === 'string') {
         diseases = diseases
-          .split("\n") // Split the string by newlines
-          .map((disease) => {
-            // Remove the number prefix and extra spaces
-            return disease.replace(/^\d+\.\s*/, "").trim();
-          })
-          .filter((disease) => disease.length > 0); // Filter out any empty strings
+          .split("\n")
+          .map(d => d.replace(/^\d+\.\s*/, "").trim())
+          .filter(Boolean);
       }
 
-      // You can log or concatenate information as needed
+      setGeneInfo({
+        fullName: resultJson["fullName"],
+        function: resultJson["function"],
+        diseases: diseases,
+      });
 
-      const geneInfoObj: GeneInfo = {
-        fullName: fullName,
-        function: functionInfo,
-        diseases: diseases
-      }
-
-      setGeneInfo(geneInfoObj);
-
-    }
-    catch (err) {
+    } catch (err) {
       console.error("Failed to run Python script", err);
     }
-  }
+  };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>🔬 Gene Explorer</h2>
-      <div className="p-6 bg-white shadow-md rounded-xl">
-        <h2 className="text-2xl font-bold text-red-700">🔬 Gene Explorer</h2>
-      </div>
-      <input
-        type="text"
-        value={gene}
-        onChange={(e) => setGene(e.target.value)}
-        placeholder="Enter gene (e.g., TP53)"
-        style={{ padding: 8, width: "200px" }}
-      />
-      <button onClick={handleSearch} style={{ marginLeft: 10, padding: 8 }}>
-        Search
-      </button>
-
-
-      {geneInfo && (
-        <div style={{ marginTop: 20 }}>
-          <h3>Gene: {gene.toUpperCase()}</h3>
-          <p><strong>Full Name:</strong> {geneInfo.fullName}</p>
-          <p><strong>Function:</strong> {geneInfo.function}</p>
-          <p><strong>Associated Diseases:</strong> {geneInfo.diseases.join(", ")}</p>
-        </div>
-      )}
-
-
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <GeneHeader />
+      <SearchInput gene={gene} setGene={setGene} onSearch={handleSearch} />
+      {geneInfo && <GeneDetails gene={gene} geneInfo={geneInfo} />}
     </div>
   );
 };

@@ -1,9 +1,44 @@
-RUN after clone: 
-cd .. / cum se cheama 
-cd scripts && python3 -m venv .venv && pip3 install certifi==2025.1.31 charset-normalizer==3.4.1 idna==3.10 pip==24.3.1 requests==2.32.3 urllib3==2.3.0 && cd ..
-npm start
+# How to run after clone
 
-template : https://dennistretyakov.com/first-electron-app-with-react-and-typescript/
+1. **Install deps**
+
+  ```sh
+    npm install
+  ```
+
+2. **Make env for python**
+
+  ```sh
+    cd scripts && python3 -m venv .venv && pip3 install certifi==2025.1.31 charset-normalizer==3.4.1 idna==3.10 pip==24.3.1 requests==2.32.3 urllib3==2.3.0 && cd ..
+  ```
+
+3. **How to run**
+
+  ```sh
+    npm start 
+  ```
+
+### Template : <https://dennistretyakov.com/first-electron-app-with-react-and-typescript/>
+
+# How to use it
+
+1. **How to add/use button**
+
+```sh
+    You go to the src/components/ui/buttonStyles.ts ,and there you add in the variant how it should look like, with the name
+```
+
+2. **Example usage:**
+
+```
+<Button
+      onClick={onSearch}
+      variant="primary"
+      btnSize="xs"
+    >
+      Search
+    </Button>
+```
 
 # Getting Started with Create React App
 

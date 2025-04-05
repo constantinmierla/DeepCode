@@ -8,8 +8,6 @@ function App() {
   return (
     <Router>
       <div className="p-4">
-        <h1 className="text-blue-500">Hello Tailwind</h1>
-        <h1 className="font-bold text-2xl underline text-red-700">Hello React</h1>
         <Routes>
           <Route path="/" element={<GeneOverview />} />
         </Routes>
