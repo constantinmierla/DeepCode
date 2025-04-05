@@ -1,17 +1,13 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import './index.css'; // <-- Tailwind first
-import './App.css';   // <-- Your custom styles
-import GeneOverview from './components/GeneOverview';
+import "./index.css"; // <-- Tailwind first
+import "./App.css"; // <-- Your custom styles
+import MainComponent from "./components/MainComponent";
 
 function App() {
   return (
     <Router>
-      <div className="p-4">
-        <Routes>
-          <Route path="/" element={<GeneOverview />} />
-        </Routes>
-      </div>
+      <MainComponent></MainComponent>
     </Router>
   );
 }

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import GeneHeader from "./GeneHeader";
-import SearchInput from "./SearchInput";
-import GeneDetails from "./GeneDetails";
+import Header from "./Header";
+import LeftComponent from "./LeftComponent";
+import CenterComponent from "./CenterComponent";
+import RightComponent from "./RightComponent";
 
 type GeneInfo = {
   fullName: string;
   function: string;
   diseases: string[];
-}
+};
 
-//TODO: implement validation , if not found
-const GeneOverview: React.FC = () => {
+const MainComponent: React.FC = () => {
   const [gene, setGene] = useState("");
   const [geneInfo, setGeneInfo] = useState<GeneInfo | null>(null);
 
@@ -21,10 +21,10 @@ const GeneOverview: React.FC = () => {
       const resultJson = JSON.parse(validJsonString);
 
       let diseases = resultJson["diseases"];
-      if (typeof diseases === 'string') {
+      if (typeof diseases === "string") {
         diseases = diseases
           .split("\n")
-          .map(d => d.replace(/^\d+\.\s*/, "").trim())
+          .map((d) => d.replace(/^\d+\.\s*/, "").trim())
           .filter(Boolean);
       }
 
@@ -33,19 +33,26 @@ const GeneOverview: React.FC = () => {
         function: resultJson["function"],
         diseases: diseases,
       });
-
     } catch (err) {
       console.error("Failed to run Python script", err);
     }
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <GeneHeader />
-      <SearchInput gene={gene} setGene={setGene} onSearch={handleSearch} />
-      {geneInfo && <GeneDetails gene={gene} geneInfo={geneInfo} />}
+    <div>
+      <Header
+        onSearchResult={async (gene) => {
+          setGene(gene);
+          await handleSearch();
+        }}
+      />
+      <div className="grid grid-cols-3 gap-4">
+        <LeftComponent gene={gene} geneInfo={geneInfo}></LeftComponent>
+        <CenterComponent gene={gene} geneInfo={geneInfo}></CenterComponent>
+        <RightComponent gene={gene} geneInfo={geneInfo}></RightComponent>
+      </div>
     </div>
   );
 };
 
-export default GeneOverview;
+export default MainComponent;

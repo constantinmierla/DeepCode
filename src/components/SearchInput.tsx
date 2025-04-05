@@ -11,8 +11,12 @@ interface SearchInputProps {
 //poate fi implementat asa: facem un json cu toate denumirile si facem cu aho corasick
 
 //TODO: adauga un spinner cat timp se incarca
-const SearchInput: React.FC<SearchInputProps> = ({ gene, setGene, onSearch }) => (
-  <div className="mb-4">
+const SearchInput: React.FC<SearchInputProps> = ({
+  gene,
+  setGene,
+  onSearch,
+}) => (
+  <div className="mb-4 flex items-center gap-2">
     <input
       type="text"
       value={gene}
@@ -20,17 +24,8 @@ const SearchInput: React.FC<SearchInputProps> = ({ gene, setGene, onSearch }) =>
       placeholder="Enter gene (e.g., TP53)"
       className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
-    <button
-      onClick={onSearch}
-      className="ml-4 p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-    >
-      Search
-    </button>
-    <Button
-      onClick={onSearch}
-      variant="primary"
-      btnSize="xs"
-    >
+
+    <Button onClick={onSearch} variant="primary" btnSize="xs">
       Search
     </Button>
   </div>
