@@ -1,4 +1,6 @@
 import React from "react";
+// Import the DNA loading component
+import { DNA } from "react-loader-spinner";
 
 type GeneInfo = {
   fullName: string;
@@ -22,8 +24,15 @@ const LeftComponent: React.FC<GeneDetailsProps> = ({
       Gene: <span className="text-blue-600">{gene.toUpperCase()}</span>
     </h3>
     {isFetching ? (
-      <div className="flex justify-center items-center h-20">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-600"></div>
+      <div className="flex justify-center items-center h-full">
+        <DNA
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="dna-loading"
+          wrapperStyle={{}}
+          wrapperClass="dna-wrapper"
+        />
       </div>
     ) : geneInfo === null ? (
       <p className="text-gray-800 italic">
