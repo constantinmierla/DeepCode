@@ -45,16 +45,16 @@ const LeftComponent: React.FC<GeneDetailsProps> = ({
         ) : (
           <>
             <p className="text-gray-800">
-              <span className="font-medium text-gray-900">Full Name:</span>{" "}
+              <span className="font-medium text-gray-900"><strong>Full Name:</strong></span>{" "}
               {geneInfo.fullName}
             </p>
             <p className="text-gray-800">
-              <span className="font-medium text-gray-900">Function:</span>{" "}
+              <span className="font-medium text-gray-900"><strong>Function</strong>:</span>{" "}
               {geneInfo.function}
             </p>
             <p className="text-gray-800">
               <span className="font-medium text-gray-900">
-                Associated Diseases:
+                <strong>Associated Diseases:</strong>
               </span>{" "}
               <ul className="list-disc list-inside text-red-600">
                 {geneInfo.diseases.map((disease, index) => (

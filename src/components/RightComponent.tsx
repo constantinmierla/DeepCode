@@ -52,15 +52,24 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
             Suggestions for{" "}
             <span className="text-blue-700">{parsedDrugs.gene}</span>
           </h4>
-          <ul className="space-y-4">
+          <ul className="space-y-4 animate-fade-in">
             {parsedDrugs.suggestions.map((item: any, index: number) => (
-              <li key={index} className="border rounded-md p-4 bg-gray-50">
+              <li
+                key={index}
+                className="border rounded-md p-4 bg-gray-50 hover:shadow-lg transition-shadow duration-300"
+              >
                 <p>
                   <strong>Name:</strong> {item.medicament_name}
                 </p>
-                <p>
-                  <strong>Score:</strong> {item.score}
-                </p>
+                <span
+                  className={`inline-block px-2 py-1 rounded-full text-sm font-semibold ${item.score >= 70 ? "bg-green-100 text-green-700" :
+                    item.score >= 50 ? "bg-yellow-100 text-yellow-700" :
+                      "bg-red-100 text-red-700"
+                    }`}
+                >
+                  {item.score}
+                </span>
+
                 <p>
                   <strong>Indication:</strong> {item.indication}
                 </p>
@@ -68,13 +77,13 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
                   <strong>Mechanism:</strong> {item.mechanism}
                 </p>
                 <div>
-                  <strong>Associated Genes:</strong>
+                  <strong>Associated Gene:</strong>
                   <ul className="flex flex-wrap gap-2 mt-1">
                     {Array.isArray(item.gene) ? (
                       item.gene.map((geneSymbol: string, geneIndex: number) => (
                         <li
                           key={geneIndex}
-                          className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm"
+                          className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm font-medium shadow-sm hover:bg-blue-200 transition font-mono"
                         >
                           {geneSymbol}
                         </li>
