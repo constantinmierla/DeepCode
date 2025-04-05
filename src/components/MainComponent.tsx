@@ -56,8 +56,7 @@ const MainComponent: React.FC = () => {
     try {
       const result = await (window as any).electronAPI.getDrugTop(searchGene);
       setTextDrugs(result);
-    }
-    catch (err) {
+    } catch (err) {
       console.error("Failed to fetch drug suggestions", err);
     }
   };
@@ -65,13 +64,24 @@ const MainComponent: React.FC = () => {
   const handleSearchAndDrug = async (searchGene: string) => {
     setIsFetching(true);
     setIsFetchingDrug(true);
+
+    const searchPromise = handleSearch(searchGene).finally(() =>
+      setIsFetching(false)
+    );
+    const drugPromise = handleDrug(searchGene).finally(() =>
+      setIsFetchingDrug(false)
+    );
+
     try {
-      await Promise.all([handleSearch(searchGene), handleDrug(searchGene)]);
+      await searchPromise;
     } catch (err) {
-      console.error("Error occurred while fetching data", err);
-    } finally {
-      setIsFetching(false);
-      setIsFetchingDrug(false);
+      console.error("Error occurred while fetching gene info", err);
+    }
+
+    try {
+      await drugPromise;
+    } catch (err) {
+      console.error("Error occurred while fetching drug suggestions", err);
     }
   };
 
@@ -98,11 +108,7 @@ const MainComponent: React.FC = () => {
           textDrugs={textDrugs}
         ></RightComponent>
 
-        {textDrugs &&
-          <div>
-            {textDrugs}
-          </div>
-        }
+        {textDrugs && <div>{textDrugs}</div>}
       </div>
     </div>
   );

@@ -50,7 +50,7 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
         <div className="mt-4">
           <h4 className="text-xl font-semibold mb-2 text-gray-800">
             Suggestions for{" "}
-            <span className="text-blue-700">{parsedDrugs.gene}</span>
+            <span className="text-blue-600 font-bold">{parsedDrugs.gene}</span>
           </h4>
           <ul className="space-y-4 animate-fade-in">
             {parsedDrugs.suggestions.map((item: any, index: number) => (
@@ -62,10 +62,13 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
                   <strong>Name:</strong> {item.medicament_name}
                 </p>
                 <span
-                  className={`inline-block px-2 py-1 rounded-full text-sm font-semibold ${item.score >= 70 ? "bg-green-100 text-green-700" :
-                    item.score >= 50 ? "bg-yellow-100 text-yellow-700" :
-                      "bg-red-100 text-red-700"
-                    }`}
+                  className={`inline-block px-2 py-1 rounded-full text-sm font-semibold ${
+                    item.score >= 70
+                      ? "bg-green-100 text-green-700"
+                      : item.score >= 50
+                      ? "bg-yellow-100 text-yellow-700"
+                      : "bg-red-100 text-red-700"
+                  }`}
                 >
                   {item.score}
                 </span>
@@ -103,4 +106,3 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
 };
 
 export default RightComponent;
-
