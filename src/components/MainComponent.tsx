@@ -98,6 +98,11 @@ const MainComponent: React.FC = () => {
           textDrugs={textDrugs}
         ></RightComponent>
 
+        {textDrugs &&
+          <div>
+            {textDrugs}
+          </div>
+        }
       </div>
     </div>
   );

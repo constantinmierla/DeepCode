@@ -3,6 +3,8 @@ import pandas as pd
 import sys
 import json
 
+# from scripts.ceva import get_similar_genes
+
 gene_symbol_to_ensembl = {
     "BRCA1": "ENSG00000012048",
     "TP53": "ENSG00000141510",
@@ -139,6 +141,41 @@ def compute_repurposing_scores(df):
     )
 
 
+def get_string_id(gene):
+    try:
+        response = requests.get(
+            "https://string-db.org/api/json/resolve",
+            params={"identifier": gene, "species": 9606},
+        )
+        response.raise_for_status()
+        data = response.json()
+        return data[0]["stringId"] if data else None
+    except Exception as e:
+        print(f"Error resolving STRING ID for {gene}: {e}")
+        return None
+
+
+def get_similar_genes(gene):
+    string_id = get_string_id(gene)
+    if not string_id:
+        return []
+    try:
+        response = requests.get(
+            "https://string-db.org/api/json/interaction_partners",
+            params={"identifiers": string_id, "species": 9606, "limit": 10},
+        )
+        response.raise_for_status()
+        data = response.json()
+        return [
+            item.get("preferredName_B").upper()
+            for item in data
+            if item.get("preferredName_B").upper() != gene.upper()
+        ]
+    except Exception as e:
+        print(f"Error fetching similar genes for {gene}: {e}")
+        return []
+
+
 def suggest_for_gene(target_gene, top_n=5):
     df = gather_all_drugs(target_gene)
     repurposing_data = compute_repurposing_scores(df)
@@ -152,6 +189,7 @@ def suggest_for_gene(target_gene, top_n=5):
         else row["repurposing_score"] * 0.3,
         axis=1,
     )
+    similar_genes = get_similar_genes(target_gene)
 
     sorted_result = filtered.sort_values(by="adjusted_score", ascending=False)
     result_dict = {
@@ -160,7 +198,8 @@ def suggest_for_gene(target_gene, top_n=5):
             {
                 "medicament_name": row["drug"],
                 "score": round(row["adjusted_score"], 2),
-                "gene": row["gene"],
+                # "gene": row["gene"],
+                "gene": similar_genes,
                 "indication": row["indication"],
                 "mechanism": row["mechanism"],
             }

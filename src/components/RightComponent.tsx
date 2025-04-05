@@ -1,5 +1,4 @@
 import React from "react";
-// Import the DNA loading component
 import { DNA } from "react-loader-spinner";
 
 type DrugSuggestionsProps = {
@@ -68,6 +67,23 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
                 <p>
                   <strong>Mechanism:</strong> {item.mechanism}
                 </p>
+                <div>
+                  <strong>Associated Genes:</strong>
+                  <ul className="flex flex-wrap gap-2 mt-1">
+                    {Array.isArray(item.gene) ? (
+                      item.gene.map((geneSymbol: string, geneIndex: number) => (
+                        <li
+                          key={geneIndex}
+                          className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm"
+                        >
+                          {geneSymbol}
+                        </li>
+                      ))
+                    ) : (
+                      <li className="text-gray-600 text-sm">{item.gene}</li>
+                    )}
+                  </ul>
+                </div>
               </li>
             ))}
           </ul>
@@ -78,3 +94,4 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
 };
 
 export default RightComponent;
+
