@@ -85,7 +85,7 @@ const MainComponent: React.FC = () => {
           await handleSearchAndDrug(gene);
         }}
       />
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 min-h-[calc(100vh-100px)]">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 min-h-[calc(100vh-100px)] px-4">
         <LeftComponent
           gene={gene}
           geneInfo={geneInfo}

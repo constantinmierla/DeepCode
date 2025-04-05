@@ -8,6 +8,6 @@ export const buttonVariants = {
 export const buttonSizes = {
   xs: 'text-xs py-1 px-2',
   sm: 'text-sm py-1.5 px-3',
-  md: 'text-base py-2 px-4',
+  md: 'text-base py-2 px-2',
   lg: 'text-lg py-3 px-5',
 };
