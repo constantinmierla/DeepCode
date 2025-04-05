@@ -20,7 +20,7 @@ const LeftComponent: React.FC<GeneDetailsProps> = ({
   isFetching,
 }) => (
   <div
-    className="mt-3 p-6 bg-white shadow-lg rounded-xl border border-gray-200"
+    className="mt-3 p-6 bg-white shadow-lg rounded-xl border border-gray-200 animate-fade-in"
     style={{ maxHeight: "calc(100vh - 100px)", overflowY: "auto" }}
   >
     <h3 className="text-2xl font-bold text-gray-900 mb-4">

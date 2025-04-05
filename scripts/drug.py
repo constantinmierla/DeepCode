@@ -57,6 +57,7 @@ gene_symbol_to_ensembl = {
     "H2AX": "ENSG00000188486",
 }
 
+
 def fetch_drugs(ensembl_id, gene_symbol):
     url = "https://api.platform.opentargets.org/api/v4/graphql"
     headers = {"Content-Type": "application/json"}
@@ -101,6 +102,7 @@ def fetch_drugs(ensembl_id, gene_symbol):
         print(f"Error fetching drugs for {gene_symbol}: {e}")
         return []
 
+
 def gather_all_drugs(target_gene=None):
     all_drugs = []
     symbols = list(gene_symbol_to_ensembl.keys())
@@ -121,6 +123,7 @@ def gather_all_drugs(target_gene=None):
 
     return pd.DataFrame(all_drugs)
 
+
 def compute_repurposing_scores(df):
     indication_counts = (
         df.groupby(["gene", "drug"]).size().reset_index(name="indication_count")
@@ -134,6 +137,7 @@ def compute_repurposing_scores(df):
         merged, df.drop_duplicates(subset=["gene", "drug"]), on=["gene", "drug"]
     )
 
+
 def get_string_id(gene):
     try:
         response = requests.get(
@@ -146,6 +150,7 @@ def get_string_id(gene):
     except Exception as e:
         print(f"Error resolving STRING ID for {gene}: {e}")
         return None
+
 
 def get_similar_genes(gene):
     string_id = get_string_id(gene)
@@ -167,14 +172,17 @@ def get_similar_genes(gene):
         print(f"Error fetching similar genes for {gene}: {e}")
         return []
 
-def suggest_for_gene(target_gene, top_n=5):
+
+def suggest_for_gene(target_gene, top_n=20):
     df = gather_all_drugs(target_gene)
     repurposing_data = compute_repurposing_scores(df)
 
     similar_genes = get_similar_genes(target_gene)
 
     is_target = repurposing_data["gene"].str.upper() == target_gene.upper()
-    is_similar = repurposing_data["gene"].str.upper().isin([g.upper() for g in similar_genes])
+    is_similar = (
+        repurposing_data["gene"].str.upper().isin([g.upper() for g in similar_genes])
+    )
 
     filtered = repurposing_data[is_target | is_similar].copy()
 
@@ -205,8 +213,10 @@ def suggest_for_gene(target_gene, top_n=5):
                 "indication": row["indication"],
                 "mechanism": row["mechanism"],
                 "gene_relation": (
-                    "target" if row["gene"].upper() == target_gene.upper()
-                    else "similar" if row["gene"].upper() in [g.upper() for g in similar_genes]
+                    "target"
+                    if row["gene"].upper() == target_gene.upper()
+                    else "similar"
+                    if row["gene"].upper() in [g.upper() for g in similar_genes]
                     else "other"
                 ),
             }
@@ -215,6 +225,7 @@ def suggest_for_gene(target_gene, top_n=5):
     }
 
     return result_dict
+
 
 def get_ensembl_id_from_symbol(symbol):
     search_url = f"https://mygene.info/v3/query?q={symbol}&species=human"
@@ -241,6 +252,7 @@ def get_ensembl_id_from_symbol(symbol):
     except Exception as e:
         print(f"Eroare la obținerea Ensembl ID pentru {symbol}: {e}")
     return None
+
 
 if __name__ == "__main__":
     gene = sys.argv[1]

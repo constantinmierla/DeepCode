@@ -3,7 +3,6 @@ import Header from "./Header";
 import LeftComponent from "./LeftComponent";
 import CenterComponent from "./CenterComponent";
 import RightComponent from "./RightComponent";
-import { text } from "stream/consumers";
 
 type GeneInfo = {
   fullName: string;

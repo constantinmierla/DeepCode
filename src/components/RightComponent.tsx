@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { DNA } from "react-loader-spinner";
+import ClusteringPlot from "./ClusteringPlot";
 
 type DrugSuggestionsProps = {
   isFetchingDrug: boolean;
@@ -11,6 +12,7 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
   isFetchingDrug,
   textDrugs,
 }) => {
+  const [isClusteringView, setIsClusteringView] = useState<boolean>(false); // Track view mode
   let parsedDrugs: any = null;
 
   try {
@@ -21,6 +23,11 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
     console.error("Invalid JSON in textDrugs:", error);
   }
 
+  // Button click handler to toggle views
+  const toggleView = () => {
+    setIsClusteringView(!isClusteringView);
+  };
+
   return (
     <div
       className="mt-3 p-6 bg-white shadow-lg rounded-xl border border-gray-200"
@@ -30,7 +37,23 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
         Drug Suggestions
       </h3>
 
-      {isFetchingDrug ? (
+      {/* Button to toggle between views */}
+      <div className="mb-4">
+        <button
+          onClick={toggleView}
+          className="px-4 py-2 text-white bg-blue-500 hover:bg-blue-700 rounded-md"
+        >
+          {isClusteringView ? "Show Drug Suggestions" : "Show Clustering Plot"}
+        </button>
+      </div>
+
+      {/* Conditional Rendering */}
+      {isClusteringView ? (
+        <div className="w-full h-[500px] md:h-[600px]">
+          {/* Clustering Plot */}
+          <ClusteringPlot drugSuggestions={textDrugs} />
+        </div>
+      ) : isFetchingDrug ? (
         <div
           className="flex justify-center items-center"
           style={{ minHeight: "70vh" }}
@@ -68,13 +91,12 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
                   <strong>Name:</strong> {item.medicament_name}
                 </p>
                 <span
-                  className={`inline-block px-2 py-1 rounded-full text-sm font-semibold ${
-                    item.score >= 70
-                      ? "bg-green-100 text-green-700"
-                      : item.score >= 50
+                  className={`inline-block px-2 py-1 rounded-full text-sm font-semibold ${item.score >= 70
+                    ? "bg-green-100 text-green-700"
+                    : item.score >= 50
                       ? "bg-yellow-100 text-yellow-700"
                       : "bg-red-100 text-red-700"
-                  }`}
+                    }`}
                 >
                   {item.score}
                 </span>
