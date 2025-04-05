@@ -72,12 +72,29 @@ const LeftComponent: React.FC<GeneDetailsProps> = ({
               <span className="font-medium text-gray-900">
                 <strong>Associated Diseases:</strong>
               </span>{" "}
-              <ul className="list-disc list-inside text-red-600">
-                {geneInfo.diseases.map((disease, index) => (
-                  <li key={index}>{disease}</li>
-                ))}
+              <br />
+            </p>
+            <p>
+              <ul className="list-disc list-inside text-black">
+                {geneInfo.diseases.map((disease, index) => {
+                  const [beforeSemicolon, afterSemicolon] = disease.split(";");
+                  return (
+                    <li key={index}>
+                      {beforeSemicolon}
+                      {afterSemicolon && (
+                        <>
+                          {" - "}
+                          <strong className="text-blue-600">
+                            {afterSemicolon.trim()}
+                          </strong>
+                        </>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </p>
+            <br />
           </>
         )}
       </div>
