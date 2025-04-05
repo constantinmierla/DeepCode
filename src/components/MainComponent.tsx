@@ -13,10 +13,13 @@ type GeneInfo = {
 const MainComponent: React.FC = () => {
   const [gene, setGene] = useState("");
   const [geneInfo, setGeneInfo] = useState<GeneInfo | null>(null);
+  const [isFetching, setIsFetching] = useState(false);
+  const [isFetchingDrug, setIsFetchingDrug] = useState(false);
+  const [drugSuggestions, setDrugSuggestions] = useState<string>("");
 
-  const handleSearch = async () => {
+  const handleSearch = async (searchGene: string) => {
     try {
-      const result = await (window as any).electronAPI.getGeneInfo(gene);
+      const result = await (window as any).electronAPI.getGeneInfo(searchGene);
       const validJsonString = result.replace(/'/g, '"');
       const resultJson = JSON.parse(validJsonString);
 
@@ -38,18 +41,52 @@ const MainComponent: React.FC = () => {
     }
   };
 
+  const handleDrug = async (searchGene: string) => {
+    try {
+      const result = await (window as any).electronAPI.getDrugTop(searchGene);
+      const validJsonString = result.replace(/'/g, '"');
+      const resultJson = JSON.parse(validJsonString);
+
+      setDrugSuggestions(resultJson.join(", "));
+    } catch (err) {
+      console.error("Failed to fetch drug suggestions", err);
+    }
+  };
+
+  const handleSearchAndDrug = async (searchGene: string) => {
+    setIsFetching(true);
+    setIsFetchingDrug(true);
+    try {
+      await Promise.all([handleSearch(searchGene), handleDrug(searchGene)]);
+    } catch (err) {
+      console.error("Error occurred while fetching data", err);
+    } finally {
+      setIsFetching(false);
+      setIsFetchingDrug(false);
+    }
+  };
+
   return (
     <div>
       <Header
         onSearchResult={async (gene) => {
           setGene(gene);
-          await handleSearch();
+          setGeneInfo(null);
+          setDrugSuggestions("");
+          await handleSearchAndDrug(gene);
         }}
       />
-      <div className="grid grid-cols-3 gap-4">
-        <LeftComponent gene={gene} geneInfo={geneInfo}></LeftComponent>
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 min-h-[calc(100vh-100px)]">
+        <LeftComponent
+          gene={gene}
+          geneInfo={geneInfo}
+          isFetching={isFetching}
+        ></LeftComponent>
         <CenterComponent gene={gene} geneInfo={geneInfo}></CenterComponent>
-        <RightComponent gene={gene} geneInfo={geneInfo}></RightComponent>
+        <RightComponent
+          isFetchingDrug={isFetchingDrug}
+          drugSuggestions={drugSuggestions}
+        ></RightComponent>
       </div>
     </div>
   );

@@ -12,6 +12,8 @@ def get_gene_info(gene_name: str):
     esearch_url = f"{BASE_URL}esearch.fcgi?db=gene&term={gene}[gene]+AND+Homo+sapiens[orgn]&retmode=json"
 
     response = requests.get(esearch_url).json()
+    if not response["esearchresult"]["idlist"]:
+        return None
     gene_id = response["esearchresult"]["idlist"][0]
     esummary_url = f"{BASE_URL}esummary.fcgi?db=gene&id={gene_id}&retmode=json"
 
@@ -49,14 +51,19 @@ def get_disease_names(omim_ids: list):
 
 
 gen_info = get_gene_info(gene_name)
-gene_info_data = {
-    "fullName": gen_info["description"],  # Using 'description' as full name
-    "function": gen_info["summary"],  # Using 'summary' for gene function
-    "diseases": get_disease_names(
-        get_omim_ids(gen_info["uid"])
-    ),  # There is no direct 'diseases' field in the API response
-}
+if gen_info:
+    gene_info_data = {
+        "fullName": gen_info["description"],  # Using 'description' as full name
+        "function": gen_info["summary"],  # Using 'summary' for gene function
+        "diseases": get_disease_names(
+            get_omim_ids(gen_info["uid"])
+        ),  # There is no direct 'diseases' field in the API response
+    }
+else:
+    gene_info_data = {
+        "fullName": "No data found for the given gene name.",
+        "function": "No data available.",
+        "diseases": "No data available.",
+    }
 
 print(gene_info_data)
-
-# print(gene_info_data)

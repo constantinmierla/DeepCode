@@ -12,25 +12,9 @@ interface GeneDetailsProps {
 }
 
 const CenterComponent: React.FC<GeneDetailsProps> = ({ gene, geneInfo }) => (
-  <div className="mt-4 p-4 bg-white shadow-md rounded-lg">
-    <h3 className="text-xl font-semibold text-gray-800">
-      Gene: {gene.toUpperCase()}
-    </h3>
-    {geneInfo ? (
-      <>
-        <p className="text-gray-700">
-          <strong>Full Name:</strong> {geneInfo.fullName}
-        </p>
-        <p className="text-gray-700">
-          <strong>Function:</strong> {geneInfo.function}
-        </p>
-        <p className="text-gray-700">
-          <strong>Associated Diseases:</strong> {geneInfo.diseases.join(", ")}
-        </p>
-      </>
-    ) : (
-      <p className="text-gray-700">No gene information available.</p>
-    )}
+  <div className="mt-6 p-6 bg-white shadow-lg rounded-xl border border-gray-200">
+    {" "}
+    <h3 className="text-2xl font-bold text-gray-900 mb-4">Center Component</h3>
   </div>
 );
 

@@ -41,7 +41,7 @@ app.on(`activate`, () => {
 
 ipcMain.handle('gene-info-pyton', async (event, geneName) => {
   return new Promise((resolve, reject) => {
-    exec(`python3 scripts/fetch_gene.py ${geneName}`, (error, stdout, stderr) => { // Pass the geneName as an argument to the Python script
+    exec(`python scripts/fetch_gene.py ${geneName}`, (error, stdout, stderr) => { // Pass the geneName as an argument to the Python script
       if (error) reject(error.message);
       else if (stderr) reject(stderr);
       else resolve(stdout);
@@ -49,4 +49,13 @@ ipcMain.handle('gene-info-pyton', async (event, geneName) => {
   });
 });
 
+ipcMain.handle('drug-pyton', async (event, geneName) => {
+  return new Promise((resolve, reject) => {
+    exec(`python scripts/drug.py ${geneName}`, (error, stdout, stderr) => {
+      if (error) reject(error.message);
+      else if (stderr) reject(stderr);
+      else resolve(stdout);
+    });
+  });
+});
 
