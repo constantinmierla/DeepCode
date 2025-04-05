@@ -19,12 +19,18 @@ const LeftComponent: React.FC<GeneDetailsProps> = ({
   geneInfo,
   isFetching,
 }) => (
-  <div className="mt-6 p-6 bg-white shadow-lg rounded-xl border border-gray-200">
+  <div
+    className="mt-6 p-6 bg-white shadow-lg rounded-xl border border-gray-200"
+    style={{ maxHeight: "calc(100vh - 115px)", overflowY: "auto" }}
+  >
     <h3 className="text-2xl font-bold text-gray-900 mb-4">
       Gene: <span className="text-blue-600">{gene.toUpperCase()}</span>
     </h3>
     {isFetching ? (
-      <div className="flex justify-center items-center h-full">
+      <div
+        className="flex justify-center items-center"
+        style={{ minHeight: "70vh" }}
+      >
         <DNA
           visible={true}
           height="80"
@@ -33,6 +39,12 @@ const LeftComponent: React.FC<GeneDetailsProps> = ({
           wrapperStyle={{}}
           wrapperClass="dna-wrapper"
         />
+        <style>
+          {`
+        svg.dna-wrapper circle:nth-child(odd) { fill: #155dfc !important; }
+        svg.dna-wrapper circle:nth-child(even) { fill: #292524 !important; }
+          `}
+        </style>
       </div>
     ) : geneInfo === null ? (
       <p className="text-gray-800 italic">
@@ -45,11 +57,15 @@ const LeftComponent: React.FC<GeneDetailsProps> = ({
         ) : (
           <>
             <p className="text-gray-800">
-              <span className="font-medium text-gray-900"><strong>Full Name:</strong></span>{" "}
+              <span className="font-medium text-gray-900">
+                <strong>Full Name:</strong>
+              </span>{" "}
               {geneInfo.fullName}
             </p>
             <p className="text-gray-800">
-              <span className="font-medium text-gray-900"><strong>Function</strong>:</span>{" "}
+              <span className="font-medium text-gray-900">
+                <strong>Function</strong>:
+              </span>{" "}
               {geneInfo.function}
             </p>
             <p className="text-gray-800">

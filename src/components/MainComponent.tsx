@@ -107,8 +107,6 @@ const MainComponent: React.FC = () => {
           drugSuggestions={drugSuggestions}
           textDrugs={textDrugs}
         ></RightComponent>
-
-        {textDrugs && <div>{textDrugs}</div>}
       </div>
     </div>
   );

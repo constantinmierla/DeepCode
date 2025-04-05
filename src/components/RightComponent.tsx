@@ -22,19 +22,19 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
   }
 
   return (
-    <div className="mt-6 p-6 bg-white shadow-lg rounded-xl border border-gray-200">
+    <div
+      className="mt-6 p-6 bg-white shadow-lg rounded-xl border border-gray-200"
+      style={{ maxHeight: "calc(100vh - 115px)", overflowY: "auto" }}
+    >
       <h3 className="text-2xl font-bold text-gray-900 mb-4">
         Drug Suggestions
       </h3>
 
       {isFetchingDrug ? (
-        <div className="flex justify-center items-center h-full">
-          <style>
-            {`
-              svg.dna-wrapper circle:nth-child(odd) { fill: #155dfc !important; }
-              svg.dna-wrapper circle:nth-child(even) { fill: #292524 !important; }
-            `}
-          </style>
+        <div
+          className="flex justify-center items-center"
+          style={{ minHeight: "70vh" }}
+        >
           <DNA
             visible={true}
             height="80"
@@ -43,6 +43,12 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
             wrapperStyle={{}}
             wrapperClass="dna-wrapper"
           />
+          <style>
+            {`
+                svg.dna-wrapper circle:nth-child(odd) { fill: #155dfc !important; }
+                svg.dna-wrapper circle:nth-child(even) { fill: #292524 !important; }
+                  `}
+          </style>
         </div>
       ) : !parsedDrugs || !parsedDrugs.suggestions?.length ? (
         <p className="text-gray-800 italic">No drug suggestions available.</p>
