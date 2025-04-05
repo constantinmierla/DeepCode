@@ -3,6 +3,7 @@ import Header from "./Header";
 import LeftComponent from "./LeftComponent";
 import CenterComponent from "./CenterComponent";
 import RightComponent from "./RightComponent";
+import { text } from "stream/consumers";
 
 type GeneInfo = {
   fullName: string;
@@ -16,6 +17,7 @@ const MainComponent: React.FC = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [isFetchingDrug, setIsFetchingDrug] = useState(false);
   const [drugSuggestions, setDrugSuggestions] = useState<string>("");
+  const [textDrugs, setTextDrugs] = useState<string>("");
 
   const handleSearch = async (searchGene: string) => {
     try {
@@ -42,13 +44,20 @@ const MainComponent: React.FC = () => {
   };
 
   const handleDrug = async (searchGene: string) => {
+    //try {
+    //  const result = await (window as any).electronAPI.getDrugTop(searchGene);
+    //  const validJsonString = result.replace(/'/g, '"');
+    //  const resultJson = JSON.parse(validJsonString);
+
+    //  setDrugSuggestions(resultJson.join(", "));
+    //} catch (err) {
+    //  console.error("Failed to fetch drug suggestions", err);
+    //}
     try {
       const result = await (window as any).electronAPI.getDrugTop(searchGene);
-      const validJsonString = result.replace(/'/g, '"');
-      const resultJson = JSON.parse(validJsonString);
-
-      setDrugSuggestions(resultJson.join(", "));
-    } catch (err) {
+      setTextDrugs(result);
+    }
+    catch (err) {
       console.error("Failed to fetch drug suggestions", err);
     }
   };
@@ -86,7 +95,12 @@ const MainComponent: React.FC = () => {
         <RightComponent
           isFetchingDrug={isFetchingDrug}
           drugSuggestions={drugSuggestions}
+          textDrugs={textDrugs}
         ></RightComponent>
+        {textDrugs &&
+          <div>
+            {textDrugs}
+          </div>}
       </div>
     </div>
   );
