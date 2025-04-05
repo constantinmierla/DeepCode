@@ -89,6 +89,8 @@ const GeneInteractionNetwork: React.FC<GeneInteractionNetworkProps> = ({
   const interactingGenes = geneInteractionsMap[geneName] || [];
 
   useEffect(() => {
+    if (!geneName) return;
+
     cyRef.current = cytoscape({
       container: document.getElementById("cy"),
       elements: [
@@ -152,6 +154,10 @@ const GeneInteractionNetwork: React.FC<GeneInteractionNetworkProps> = ({
       cyRef.current?.destroy();
     };
   }, [geneName, interactingGenes]);
+
+  if (!geneName) {
+    return <div className="text-gray-800 italic">No data available</div>;
+  }
 
   return (
     <div className="gene-interaction-network">
