@@ -14,7 +14,7 @@ interface GeneDetailsProps {
 
 const CenterComponent: React.FC<GeneDetailsProps> = ({ gene, geneInfo }) => (
   <div
-    className="mt-3 p-6 bg-white shadow-lg rounded-xl border border-gray-200"
+    className="mt-3 p-6 bg-white shadow-lg rounded-xl border border-gray-200 animate-fade-in"
     style={{ maxHeight: "calc(100vh - 100px)", overflowY: "auto" }}
   >
     {" "}

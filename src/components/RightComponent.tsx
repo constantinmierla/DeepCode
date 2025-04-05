@@ -30,7 +30,7 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
 
   return (
     <div
-      className="mt-3 p-6 bg-white shadow-lg rounded-xl border border-gray-200"
+      className="mt-3 p-6 bg-white shadow-lg rounded-xl border border-gray-200 animate-fade-in"
       style={{ maxHeight: "calc(100vh - 100px)", overflowY: "auto" }}
     >
       <h3 className="text-2xl font-bold text-gray-900 mb-4">
@@ -91,12 +91,13 @@ const RightComponent: React.FC<DrugSuggestionsProps> = ({
                   <strong>Name:</strong> {item.medicament_name}
                 </p>
                 <span
-                  className={`inline-block px-2 py-1 rounded-full text-sm font-semibold ${item.score >= 70
-                    ? "bg-green-100 text-green-700"
-                    : item.score >= 50
+                  className={`inline-block px-2 py-1 rounded-full text-sm font-semibold ${
+                    item.score >= 70
+                      ? "bg-green-100 text-green-700"
+                      : item.score >= 50
                       ? "bg-yellow-100 text-yellow-700"
                       : "bg-red-100 text-red-700"
-                    }`}
+                  }`}
                 >
                   {item.score}
                 </span>

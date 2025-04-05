@@ -27,7 +27,9 @@ interface ClusteringPlotProps {
   drugSuggestions: string;
 }
 
-export const ClusteringPlot: React.FC<ClusteringPlotProps> = ({ drugSuggestions }) => {
+export const ClusteringPlot: React.FC<ClusteringPlotProps> = ({
+  drugSuggestions,
+}) => {
   let parsedDrugs: any = null;
 
   try {
@@ -39,28 +41,37 @@ export const ClusteringPlot: React.FC<ClusteringPlotProps> = ({ drugSuggestions 
   }
 
   const data = {
-    datasets: parsedDrugs?.suggestions.map((item: any) => ({
-      label: item.medicament_name,
-      data: [{ x: item.score, y: Math.random() * 100, r: 100 }], // Randomize y-axis, score on x-axis
-      backgroundColor:
-        item.score >= 70
-          ? "rgba(34, 193, 34, 0.6)"
-          : item.score >= 50
+    datasets:
+      parsedDrugs?.suggestions.map((item: any) => ({
+        label: item.medicament_name,
+        data: [{ x: item.score, y: Math.random() * 100, r: 100 }], // Randomize y-axis, score on x-axis
+        backgroundColor:
+          item.score >= 70
+            ? "rgba(34, 193, 34, 0.6)"
+            : item.score >= 50
             ? "rgba(255, 193, 7, 0.6)"
             : "rgba(244, 67, 54, 0.6)",
-    })) || [],
+      })) || [],
   };
 
   return (
     <div className="mt-6">
-      <h4 className="text-4xl font-semibold text-gray-800 mb-2">
+      <h4 className="text-2xl font-semibold text-gray-800 mb-2">
         Clustering Plot of Drug Suggestions
       </h4>
-      <div className="chart-container" style={{ position: 'relative', height: '1000px', width: '100%' }}>
+      <div
+        className="chart-container"
+        style={{
+          position: "relative",
+          height: "calc(100vh - 200px)",
+          width: "100%",
+        }}
+      >
         <Scatter
           data={data}
           options={{
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
               title: {
                 display: true,
@@ -68,7 +79,7 @@ export const ClusteringPlot: React.FC<ClusteringPlotProps> = ({ drugSuggestions 
               },
               tooltip: {
                 callbacks: {
-                  label: (tooltipItem: TooltipItem<'scatter'>) => {
+                  label: (tooltipItem: TooltipItem<"scatter">) => {
                     return `Score: ${tooltipItem.parsed.x}`;
                   },
                 },
