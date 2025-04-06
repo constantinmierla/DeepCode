@@ -6,14 +6,12 @@ import {
   PointElement,
   Title,
   Tooltip,
-  Legend,
   Filler,
-  LineElement, // Import LineElement
+  LineElement,
 } from "chart.js";
 import { Scatter } from "react-chartjs-2";
-import { TooltipItem } from "chart.js"; // Import TooltipItem type
+import { TooltipItem } from "chart.js";
 
-// Register necessary chart components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -21,7 +19,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Filler,
-  LineElement, // Register LineElement
+  LineElement,
   Filler
 );
 
@@ -54,14 +52,14 @@ export const ClusteringPlot: React.FC<ClusteringPlotProps> = ({
           item.score >= 70
             ? "rgba(34, 193, 34, 0.6)"
             : item.score >= 50
-            ? "rgba(255, 193, 7, 0.6)"
-            : "rgba(244, 67, 54, 0.6)",
+              ? "rgba(255, 193, 7, 0.6)"
+              : "rgba(244, 67, 54, 0.6)",
         borderColor:
           item.score >= 70
             ? "rgba(34, 193, 34, 1)"
             : item.score >= 50
-            ? "rgba(255, 193, 7, 1)"
-            : "rgba(244, 67, 54, 1)",
+              ? "rgba(255, 193, 7, 1)"
+              : "rgba(244, 67, 54, 1)",
         borderWidth: 2,
         showLine: true, // Enable line drawing
         pointRadius: 0, // Hide points
@@ -115,23 +113,23 @@ export const ClusteringPlot: React.FC<ClusteringPlotProps> = ({
               },
               y: {
                 min: 1,
-                max: parsedDrugs?.suggestions.length || 20, // Adjust Y-axis max dynamically
+                max: parsedDrugs?.suggestions.length || 20,
                 title: {
                   display: true,
                   text: "Medicament Index",
                 },
                 ticks: {
-                  stepSize: 1, // Ensure Y-axis increments by 1
+                  stepSize: 1,
                 },
               },
             },
             elements: {
               line: {
-                borderWidth: 2, // Set line thickness
-                tension: 0, // Disable curve smoothing
+                borderWidth: 2,
+                tension: 0,
               },
               point: {
-                radius: 0, // Hide points
+                radius: 0,
               },
             },
           }}

@@ -43,15 +43,6 @@ const MainComponent: React.FC = () => {
   };
 
   const handleDrug = async (searchGene: string) => {
-    //try {
-    //  const result = await (window as any).electronAPI.getDrugTop(searchGene);
-    //  const validJsonString = result.replace(/'/g, '"');
-    //  const resultJson = JSON.parse(validJsonString);
-
-    //  setDrugSuggestions(resultJson.join(", "));
-    //} catch (err) {
-    //  console.error("Failed to fetch drug suggestions", err);
-    //}
     try {
       const result = await (window as any).electronAPI.getDrugTop(searchGene);
       setTextDrugs(result);

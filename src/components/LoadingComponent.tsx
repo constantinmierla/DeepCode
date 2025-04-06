@@ -10,10 +10,10 @@ const LoadingComponent: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setFadeOut(true); // Start fading out the loading screen
+      setFadeOut(true);
       setTimeout(() => {
-        setIsLoading(false); // Hide the loading screen after fade-out
-      }, 500); // Match this duration with the CSS transition duration
+        setIsLoading(false);
+      }, 500);
     }, 2500);
 
     return () => clearTimeout(timer);
@@ -23,9 +23,8 @@ const LoadingComponent: React.FC<{ children: React.ReactNode }> = ({
     <div>
       {isLoading ? (
         <div
-          className={`flex items-center justify-center h-screen bg-white transition-opacity duration-700 ${
-            fadeOut ? "opacity-0" : "opacity-100"
-          }`}
+          className={`flex items-center justify-center h-screen bg-white transition-opacity duration-700 ${fadeOut ? "opacity-0" : "opacity-100"
+            }`}
         >
           <div className="flex flex-col items-center">
             <h1 className="text-blue-600 text-6xl font-bold mb-4">
@@ -66,7 +65,7 @@ const LoadingComponent: React.FC<{ children: React.ReactNode }> = ({
           </div>
         </div>
       ) : (
-        <div className="fade-in opacity-0 transition-opacity duration-500 opacity-100">
+        <div className="fade-in opacity-0 transition-opacity duration-500">
           {children}
         </div>
       )}

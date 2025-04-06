@@ -5,10 +5,8 @@ const GeneEGFR: React.FC = () => {
 
   useEffect(() => {
     if (networkContainer.current) {
-      // Import vis-network if it's not globally available
       const vis = require("vis-network/standalone");
 
-      // Define all nodes
       const nodes = new vis.DataSet([
         { color: "#ff6666", id: "EGF", label: "EGF", shape: "dot" },
         { color: "#ffcc00", id: "EGFR", label: "EGFR", shape: "dot" },
@@ -30,7 +28,6 @@ const GeneEGFR: React.FC = () => {
         { color: "#00ccff", id: "GAB1", label: "GAB1", shape: "dot" },
       ]);
 
-      // Define all edges
       const edges = new vis.DataSet([
         {
           arrows: "to",
@@ -201,21 +198,17 @@ const GeneEGFR: React.FC = () => {
         manipulation: {
           enabled: false,
         },
-        // Set initial scale for zoom
-        zoomMin: 0.1, // Minimum zoom level
-        zoomMax: 2, // Maximum zoom level
-        // Adjust the initial position of the network
+        zoomMin: 0.1,
+        zoomMax: 2,
         layout: {
           randomSeed: 2,
           improvedLayout: true,
         },
       };
 
-      // Initialize the network
       const network = new vis.Network(networkContainer.current, data, options);
 
       return () => {
-        // Cleanup when component unmounts
         if (network) {
           network.destroy();
         }
@@ -229,7 +222,7 @@ const GeneEGFR: React.FC = () => {
         id="mynetwork"
         ref={networkContainer}
         className="card-body"
-        style={{ width: "100%", height: "800px" }} // Adjusted height to match TP53
+        style={{ width: "100%", height: "800px" }}
       ></div>
     </div>
   );

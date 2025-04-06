@@ -59,28 +59,22 @@ const CenterComponent: React.FC<GeneDetailsProps> = ({ gene, geneInfo }) => {
         Center Component
       </h3>
 
-      {/* Conditionally render GeneTP53 only when gene name is TP53 */}
       {gene === "TP53" && (
         <div style={{ width: "100%", height: "600px" }}>
           {" "}
-          {/* Adjust the height and width for zoom */}
           <GeneTP53 />
         </div>
       )}
 
-      {/* Conditionally render GeneEGFR only when gene name is EGFR */}
       {gene === "EGFR" && (
         <div style={{ width: "100%", height: "600px" }}>
           {" "}
-          {/* Adjust the height and width for zoom */}
           <GeneEGFR />
         </div>
       )}
 
-      {/* Render the GeneInteractionNetwork component regardless of the gene name */}
       <div style={{ width: "100%", height: "600px" }}>
         {" "}
-        {/* Adjust the height and width for zoom */}
         <GeneInteractionNetwork geneName={gene} />
         <GeneSimilarityChart data={data}></GeneSimilarityChart>
       </div>

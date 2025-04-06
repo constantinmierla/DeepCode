@@ -1,88 +1,60 @@
-# How to run after clone
+# DeepCode
 
-1. **Install deps**
+## Overview
+
+A cross-platform desktop application for visualizing gene interactions and exploring biological networks.
+
+This tool combines Python-based bioinformatics processing (using Bio.KEGG and an NNLP model for gene association) with a React + Electron frontend, providing an interactive UI for gene discovery and exploration. The application fetches gene data, builds interaction graphs, and allows users to analyze biological functions and disease associations.
+
+1. **Install dependencies**
 
   ```sh
-    npm install
+    npm install --legacy-peer-deps
   ```
 
 2. **Make env for python**
 
   ```sh
-    cd scripts && python3 -m venv .venv && pip3 install certifi==2025.1.31 charset-normalizer==3.4.1 idna==3.10 pip==24.3.1 requests==2.32.3 urllib3==2.3.0 && cd ..
+    python3 -m venv .venv
+    source .venv/bin/activate      # Unix/macOS
+    .venv\Scripts\activate.bat     # Windows
+    pip install requirements.txt
   ```
 
-3. **How to run**
+3. **How to run defined in the package.json/scripts**
 
   ```sh
-    npm start 
+    npm start  
   ```
 
-### Template : <https://dennistretyakov.com/first-electron-app-with-react-and-typescript/>
+### Technologies Used
 
-# How to use it
+- **Backend:** python with Bio.KEGG for data fetching and NNLP (Neural Natural Language Processing) model for gene association using their summaries.
+- **Frontend:** React Native + Electron for cross-platform desktop application and webpack for module bundling.
+- **Visualization:** Cytoscape.js for gene interaction graphs
 
-1. **How to add/use button**
+### Project Structure
 
-```sh
-    You go to the src/components/ui/buttonStyles.ts ,and there you add in the variant how it should look like, with the name
-```
+- src/components **React Components**
+- scripts/  **Backend for live-data and graph generation**
+- public/  **Static/preload/electron files**
 
-2. **Example usage:**
+# Preview
 
-```
-<Button
-      onClick={onSearch}
-      variant="primary"
-      btnSize="xs"
-    >
-      Search
-    </Button>
-```
+<img src="./assets/fullPreview.jpeg" alt="Gene Network Demo" width="600"/>
 
-# Getting Started with Create React App
+### Gene TP53 using Bio.KEGG
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src="./assets/geneTP53.jpeg" alt="Gene TP53" width="600"/>
 
-## Available Scripts
+### Gene EGFR using Bio.KEGG
 
-In the project directory, you can run:
+<img src="./assets/geneEGFR.jpeg" alt="Gene EGFR" width="600"/>
 
-### `npm start`
+### Gene Info Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<img src="./assets/geneInfo.jpeg" alt="Gene Info" width="600"/>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Clustering of Drug suggestions based on score
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<img src="./assets/clustering.jpeg" alt="Clustering drugs" width="600"/>

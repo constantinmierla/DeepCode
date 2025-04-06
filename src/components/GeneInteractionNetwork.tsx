@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import cytoscape, { Core } from "cytoscape";
 import { geneInteractionsMap, geneData } from "./info.js";
 
-// Type definition for the interaction network
 type GeneInteraction = {
   gene: string;
   interactionType: string;

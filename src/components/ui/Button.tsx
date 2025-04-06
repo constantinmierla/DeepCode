@@ -52,7 +52,6 @@ class Button extends PureComponent<ButtonProps> {
       ...props
     } = this.props;
 
-    // Map variant to internal btnStyle for backward compatibility
     let btnStyle = this.props.btnStyle;
 
     if (this.props.variant) {
@@ -83,28 +82,6 @@ class Button extends PureComponent<ButtonProps> {
       className
     );
 
-
-    //const classes = classNames(
-    //  className,
-    //  styles.btn,
-    //  {
-    //    [styles.btnLg]: btnSize === 'lg' || btnSize === 'large',
-    //    [styles.btnMd]: btnSize === 'md' || btnSize === 'medium',
-    //    [styles.btnSm]: btnSize === 'sm' || btnSize === 'small',
-    //    [styles.btnXs]: btnSize === 'xs' || btnSize === 'extra-small',
-    //    [styles.btnDefault]: btnStyle === 'default',
-    //    [styles.btnPrimary]: btnStyle === 'primary',
-    //    [styles.btnDanger]: btnStyle === 'danger' || btnStyle === 'emphasis',
-    //    [styles.btnBorder]: btnStyle === 'border' || btnStyle === 'flat',
-    //    [styles.btnLink]: btnStyle === 'link',
-    //    [styles.btnBlock]: block,
-    //    [styles.btnCompact]: compact || iconOnly,
-    //    [styles.hover]: hover,
-    //    [styles.active]: active,
-    //    [styles.focus]: focus,
-    //    [styles.dropdownToggle]: dropdownToggle
-    //  }
-    //);
 
     return (
       <Component
