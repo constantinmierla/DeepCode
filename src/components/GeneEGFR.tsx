@@ -228,7 +228,7 @@ const GeneEGFR: React.FC = () => {
       <div
         id="mynetwork"
         ref={networkContainer}
-        className="card-body"
+        className="card-body overflow-hidden"
         style={{ width: "100%", height: "800px" }} // Adjusted height to match TP53
       ></div>
     </div>

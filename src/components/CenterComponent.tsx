@@ -15,40 +15,6 @@ interface GeneDetailsProps {
   geneInfo: GeneInfo | null;
 }
 
-const data = {
-  central_gene: "TP53",
-  relations: [
-    { source: "TP53", target: "CDKN1A", type: "activation" },
-    { source: "CASP8", target: "TP53", type: "activation" },
-    { source: "MDM2", target: "TP53", type: "inhibition" },
-    { source: "ATM", target: "TP53", type: "activation" },
-    { source: "MDM2", target: "TP53", type: "inhibition" },
-    { source: "ATM", target: "TP53", type: "activation" },
-    { source: "SIRT1", target: "TP53", type: "inhibition" },
-    { source: "MDM2", target: "TP53", type: "inhibition" },
-    { source: "TP53", target: "CDKN2A", type: "activation" },
-    { source: "TP53", target: "CDKN2C", type: "activation" },
-    { source: "TP53", target: "CDKN1A", type: "activation" },
-    { source: "TP53", target: "CDKN1B", type: "activation" },
-    { source: "CDKN2C", target: "CDK4", type: "inhibition" },
-    { source: "CDKN2A", target: "MDM2", type: "inhibition" },
-    { source: "MDM2", target: "RB1", type: "inhibition" },
-    { source: "MDM4", target: "MDM2", type: "activation" },
-    { source: "TP53", target: "MDM2", type: "activation" },
-    { source: "CASP8", target: "ATM", type: "activation" },
-    { source: "CDKN1A", target: "CDK4", type: "inhibition" },
-    { source: "AKT3", target: "CDKN1A", type: "inhibition" },
-    { source: "CDKN1A", target: "CASP3", type: "inhibition" },
-    { source: "CDKN1A", target: "MAP3K5", type: "inhibition" },
-    { source: "CDKN2A", target: "CDK4", type: "inhibition" },
-    { source: "MYC", target: "CDKN2A", type: "activation" },
-  ],
-  stats: {
-    total_relations: 24,
-    unique_genes: 16,
-  },
-};
-
 const CenterComponent: React.FC<GeneDetailsProps> = ({ gene, geneInfo }) => {
   return (
     <div
@@ -56,7 +22,8 @@ const CenterComponent: React.FC<GeneDetailsProps> = ({ gene, geneInfo }) => {
       style={{ maxHeight: "calc(100vh - 100px)", overflowY: "auto" }}
     >
       <h3 className="text-2xl font-bold text-gray-900 mb-4">
-        Center Component
+        Gene Connections for{" "}
+        <span className="text-blue-600">{gene.toUpperCase()}</span>
       </h3>
 
       {/* Conditionally render GeneTP53 only when gene name is TP53 */}
@@ -82,7 +49,6 @@ const CenterComponent: React.FC<GeneDetailsProps> = ({ gene, geneInfo }) => {
         {" "}
         {/* Adjust the height and width for zoom */}
         <GeneInteractionNetwork geneName={gene} />
-        <GeneSimilarityChart data={data}></GeneSimilarityChart>
       </div>
     </div>
   );
