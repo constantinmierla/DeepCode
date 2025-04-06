@@ -45,26 +45,26 @@ export const ClusteringPlot: React.FC<ClusteringPlotProps> = ({
   const data = {
     datasets:
       parsedDrugs?.suggestions.map((item: any, index: number) => ({
-        label: `${index + 1}. ${item.medicament_name}`, // Add index to the label
+        label: `${index + 1}. ${item.medicament_name}`,
         data: [
-          { x: 0, y: index + 1 }, // Start of the line
-          { x: item.score, y: index + 1 }, // End of the line
+          { x: 0, y: index + 1 },
+          { x: item.score, y: index + 1 },
         ],
         backgroundColor:
           item.score >= 70
             ? "rgba(34, 193, 34, 0.6)"
             : item.score >= 50
-            ? "rgba(255, 193, 7, 0.6)"
-            : "rgba(244, 67, 54, 0.6)",
+              ? "rgba(255, 193, 7, 0.6)"
+              : "rgba(244, 67, 54, 0.6)",
         borderColor:
           item.score >= 70
             ? "rgba(34, 193, 34, 1)"
             : item.score >= 50
-            ? "rgba(255, 193, 7, 1)"
-            : "rgba(244, 67, 54, 1)",
+              ? "rgba(255, 193, 7, 1)"
+              : "rgba(244, 67, 54, 1)",
         borderWidth: 2,
-        showLine: true, // Enable line drawing
-        pointRadius: 0, // Hide points
+        showLine: true,
+        pointRadius: 0,
       })) || [],
   };
 
@@ -115,23 +115,23 @@ export const ClusteringPlot: React.FC<ClusteringPlotProps> = ({
               },
               y: {
                 min: 1,
-                max: parsedDrugs?.suggestions.length || 20, // Adjust Y-axis max dynamically
+                max: parsedDrugs?.suggestions.length || 20,
                 title: {
                   display: true,
                   text: "Medicament Index",
                 },
                 ticks: {
-                  stepSize: 1, // Ensure Y-axis increments by 1
+                  stepSize: 1,
                 },
               },
             },
             elements: {
               line: {
-                borderWidth: 2, // Set line thickness
-                tension: 0, // Disable curve smoothing
+                borderWidth: 2,
+                tension: 0,
               },
               point: {
-                radius: 0, // Hide points
+                radius: 0,
               },
             },
           }}

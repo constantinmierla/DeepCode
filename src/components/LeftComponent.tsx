@@ -11,7 +11,7 @@ type GeneInfo = {
 interface GeneDetailsProps {
   gene: string;
   geneInfo: GeneInfo | null;
-  isFetching: boolean; // Add a prop to indicate if data is being fetched
+  isFetching: boolean;
 }
 
 const LeftComponent: React.FC<GeneDetailsProps> = ({

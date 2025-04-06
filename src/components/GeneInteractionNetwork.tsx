@@ -2,11 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import cytoscape, { Core } from "cytoscape";
 import { geneInteractionsMap, geneData } from "./info.js";
 
-// Type definition for the interaction network
-type GeneInteraction = {
-  gene: string;
-  interactionType: string;
-};
 
 type GeneDetails = {
   fullName: string;
@@ -97,7 +92,6 @@ const GeneInteractionNetwork: React.FC<GeneInteractionNetworkProps> = ({
 
       const rect = cyContainer.getBoundingClientRect();
 
-      // Adjust the position relative to the page/document
       const adjustedX = rect.left + x;
       const adjustedY = rect.top + y;
 
@@ -136,7 +130,7 @@ const GeneInteractionNetwork: React.FC<GeneInteractionNetworkProps> = ({
             boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
             zIndex: 10,
             maxWidth: "300px",
-            transform: "translate(-50%, -100%)", // moves it above and centered horizontally
+            transform: "translate(-50%, -100%)",
           }}
         >
           <h3 style={{ marginTop: 0 }}>{selectedGeneDetails.fullName}</h3>

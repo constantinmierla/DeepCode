@@ -10,7 +10,6 @@ import {
   Legend,
 } from "chart.js";
 
-// Register chart components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -43,28 +42,24 @@ const GeneSimilarityChart: React.FC<GeneSimilarityChartProps> = ({ data }) => {
   );
 };
 
-// Helper function to calculate gene compatibility
 const calculateGeneCompatibility = (
   relations: { source: string; target: string; type: string }[]
 ): { [key: string]: number } => {
   return relations.reduce((acc, relation) => {
     const targetGene = relation.target;
 
-    // Define the compatibility score based on the interaction type
     const compatibilityScore =
       relation.type === "activation"
         ? 1
         : relation.type === "inhibition"
-        ? -1
-        : 0;
+          ? -1
+          : 0;
 
-    // Sum the scores for each gene
     acc[targetGene] = (acc[targetGene] || 0) + compatibilityScore;
     return acc;
   }, {} as { [key: string]: number });
 };
 
-// Helper function to generate chart data
 const generateChartData = (geneCompatibility: { [key: string]: number }) => ({
   labels: Object.keys(geneCompatibility),
   datasets: [
@@ -84,7 +79,6 @@ const generateChartData = (geneCompatibility: { [key: string]: number }) => ({
   ],
 });
 
-// Helper function to generate chart options
 const generateChartOptions = () => ({
   responsive: true,
   plugins: {

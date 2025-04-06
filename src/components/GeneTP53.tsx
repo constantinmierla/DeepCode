@@ -5,10 +5,8 @@ const GeneTP53: React.FC = () => {
 
   useEffect(() => {
     if (networkContainer.current) {
-      // Import vis-network if it's not globally available
       const vis = require("vis-network/standalone");
 
-      // Define all nodes
       const nodes = new vis.DataSet([
         { color: "#ffcc00", id: "TP53", label: "TP53", shape: "dot" },
         { color: "#00ccff", id: "CDKN1A", label: "CDKN1A", shape: "dot" },
@@ -31,7 +29,6 @@ const GeneTP53: React.FC = () => {
         { color: "#00ccff", id: "CASP6", label: "CASP6", shape: "dot" },
       ]);
 
-      // Define all edges
       const edges = new vis.DataSet([
         {
           arrows: "to",
@@ -175,7 +172,6 @@ const GeneTP53: React.FC = () => {
         },
       ]);
 
-      // Prepare the data and options
       const data = { nodes, edges };
       const options = {
         configure: { enabled: false },
@@ -195,11 +191,9 @@ const GeneTP53: React.FC = () => {
         layout: { randomSeed: 2 },
       };
 
-      // Initialize the network
       const network = new vis.Network(networkContainer.current, data, options);
 
       return () => {
-        // Cleanup when component unmounts
         if (network) {
           network.destroy();
         }
@@ -213,7 +207,7 @@ const GeneTP53: React.FC = () => {
         id="mynetwork"
         ref={networkContainer}
         className="card-body"
-        style={{ width: "100%", height: "800px" }} // Adjusted height here
+        style={{ width: "100%", height: "800px" }}
       ></div>
     </div>
   );
