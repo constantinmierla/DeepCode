@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
   Filler,
+  LineElement, // Import LineElement
 } from "chart.js";
 import { Scatter } from "react-chartjs-2";
 import { TooltipItem } from "chart.js"; // Import TooltipItem type
@@ -19,7 +20,8 @@ ChartJS.register(
   PointElement,
   Title,
   Tooltip,
-  Legend,
+  Filler,
+  LineElement, // Register LineElement
   Filler
 );
 
@@ -42,23 +44,32 @@ export const ClusteringPlot: React.FC<ClusteringPlotProps> = ({
 
   const data = {
     datasets:
-      parsedDrugs?.suggestions.map((item: any) => ({
-        label: item.medicament_name,
-        data: [{ x: item.score, y: Math.random() * 100, r: 100 }], // Randomize y-axis, score on x-axis
+      parsedDrugs?.suggestions.map((item: any, index: number) => ({
+        label: `${index + 1}. ${item.medicament_name}`, // Add index to the label
+        data: [
+          { x: 0, y: index + 1 }, // Start of the line
+          { x: item.score, y: index + 1 }, // End of the line
+        ],
         backgroundColor:
           item.score >= 70
             ? "rgba(34, 193, 34, 0.6)"
             : item.score >= 50
             ? "rgba(255, 193, 7, 0.6)"
             : "rgba(244, 67, 54, 0.6)",
+        borderColor:
+          item.score >= 70
+            ? "rgba(34, 193, 34, 1)"
+            : item.score >= 50
+            ? "rgba(255, 193, 7, 1)"
+            : "rgba(244, 67, 54, 1)",
+        borderWidth: 2,
+        showLine: true, // Enable line drawing
+        pointRadius: 0, // Hide points
       })) || [],
   };
 
   return (
     <div className="mt-6">
-      <h4 className="text-2xl font-semibold text-gray-800 mb-2">
-        Clustering Plot of Drug Suggestions
-      </h4>
       <div
         className="chart-container"
         style={{
@@ -87,20 +98,40 @@ export const ClusteringPlot: React.FC<ClusteringPlotProps> = ({
             },
             scales: {
               x: {
-                min: 0,
-                max: 100,
+                min: Math.min(
+                  ...(parsedDrugs?.suggestions.map(
+                    (item: any) => item.score - 5
+                  ) || [0])
+                ),
+                max: Math.max(
+                  ...(parsedDrugs?.suggestions.map(
+                    (item: any) => item.score
+                  ) || [100])
+                ),
                 title: {
                   display: true,
                   text: "Score",
                 },
               },
               y: {
-                min: 0,
-                max: 100,
+                min: 1,
+                max: parsedDrugs?.suggestions.length || 20, // Adjust Y-axis max dynamically
                 title: {
                   display: true,
-                  text: "Random Y (for cluster spacing)",
+                  text: "Medicament Index",
                 },
+                ticks: {
+                  stepSize: 1, // Ensure Y-axis increments by 1
+                },
+              },
+            },
+            elements: {
+              line: {
+                borderWidth: 2, // Set line thickness
+                tension: 0, // Disable curve smoothing
+              },
+              point: {
+                radius: 0, // Hide points
               },
             },
           }}

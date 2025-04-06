@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import "./index.css"; // <-- Tailwind first
 import "./App.css"; // <-- Your custom styles
 import MainComponent from "./components/MainComponent";
