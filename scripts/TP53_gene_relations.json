@@ -1,0 +1,119 @@
+{
+  "central_gene": "TP53",
+  "relations": [
+    {
+      "source": "TP53",
+      "target": "CDKN1A",
+      "type": "activation"
+    },
+    {
+      "source": "CASP8",
+      "target": "TP53",
+      "type": "activation"
+    },
+    {
+      "source": "MDM2",
+      "target": "TP53",
+      "type": "inhibition"
+    },
+    {
+      "source": "ATM",
+      "target": "TP53",
+      "type": "activation"
+    },
+    {
+      "source": "MDM2",
+      "target": "TP53",
+      "type": "inhibition"
+    },
+    {
+      "source": "TP53",
+      "target": "CDKN2A",
+      "type": "activation"
+    },
+    {
+      "source": "TP53",
+      "target": "CDKN2C",
+      "type": "activation"
+    },
+    {
+      "source": "TP53",
+      "target": "CDKN1A",
+      "type": "activation"
+    },
+    {
+      "source": "TP53",
+      "target": "CDKN1B",
+      "type": "activation"
+    },
+    {
+      "source": "CDKN2A",
+      "target": "MDM2",
+      "type": "inhibition"
+    },
+    {
+      "source": "CDKN2A",
+      "target": "CDK4",
+      "type": "inhibition"
+    },
+    {
+      "source": "MYC",
+      "target": "CDKN2A",
+      "type": "activation"
+    },
+    {
+      "source": "MAPK14",
+      "target": "CDKN2A",
+      "type": "activation"
+    },
+    {
+      "source": "RRAS2",
+      "target": "CDKN2A",
+      "type": "activation"
+    },
+    {
+      "source": "CASP8",
+      "target": "ATM",
+      "type": "activation"
+    },
+    {
+      "source": "FADD",
+      "target": "CASP8",
+      "type": "activation"
+    },
+    {
+      "source": "CASP8",
+      "target": "CASP3",
+      "type": "activation"
+    },
+    {
+      "source": "CASP8",
+      "target": "BID",
+      "type": "activation"
+    },
+    {
+      "source": "CASP8",
+      "target": "CASP7",
+      "type": "activation"
+    },
+    {
+      "source": "CFLAR",
+      "target": "CASP8",
+      "type": "inhibition"
+    },
+    {
+      "source": "GZMB",
+      "target": "CASP8",
+      "type": "activation"
+    },
+    {
+      "source": "CASP8",
+      "target": "CASP6",
+      "type": "activation"
+    }
+  ],
+  "stats": {
+    "total_relations": 22,
+    "unique_genes": 19
+  }
+}

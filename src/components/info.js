@@ -48,6 +48,18 @@ export const geneInteractionsMap: Record<string, GeneInteraction[]> = {
     { gene: "NBN", interactionType: "regulatory" },
     { gene: "MRE11", interactionType: "regulatory" },
   ],
+  EGFR: [
+    { gene: "PIK3CA", interactionType: "regulatory" },
+    { gene: "AKT1", interactionType: "regulatory" },
+    { gene: "MTOR", interactionType: "regulatory" },
+    { gene: "SOS1", interactionType: "co-expression" },
+    { gene: "GRB2", interactionType: "regulatory" },
+    { gene: "ERBB2", interactionType: "co-expression" },
+    { gene: "EGFR", interactionType: "auto-regulation" },
+    { gene: "SHC1", interactionType: "regulatory" },
+    { gene: "STAT3", interactionType: "regulatory" },
+    { gene: "PIK3R1", interactionType: "regulatory" },
+  ],
 };
 
 export const geneData: { [key: string]: GeneDetails } = {
@@ -166,5 +178,9 @@ export const geneData: { [key: string]: GeneDetails } = {
     function: "Involved in DNA repair and maintenance of genome stability.",
     diseases: ["Cancer", "Ataxia Telangiectasia-like Disorder"],
   },
+  EGFR: {
+    fullName: "Epidermal Growth Factor Receptor",
+    function: "Plays a role in regulating cell growth, survival, and differentiation by binding to growth factors.",
+    diseases: ["Lung Cancer", "Head and Neck Cancer", "Glioblastoma", "Breast Cancer"],
+  },
 };
-

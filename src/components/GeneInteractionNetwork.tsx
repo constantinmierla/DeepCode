@@ -18,6 +18,7 @@ type GeneInteractionNetworkProps = {
   geneName: string;
 };
 
+
 const GeneInteractionNetwork: React.FC<GeneInteractionNetworkProps> = ({
   geneName,
 }) => {
@@ -121,6 +122,7 @@ const GeneInteractionNetwork: React.FC<GeneInteractionNetworkProps> = ({
   return (
     <div className="gene-interaction-network">
       <div id="cy" style={{ height: "600px", width: "100%" }}></div>
+
       {selectedGeneDetails && popupPosition && (
         <div
           style={{
